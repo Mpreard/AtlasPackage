@@ -69,15 +69,12 @@ class EntityManager extends Transit implements CoreAwareInterface
      * @param object $domain
      *
      * @return EntityManager
-     * @throws RepositoryException
      */
     public function detach(object $domain): EntityManager
     {
-        if (!$this->plan->contains($domain)) {
-            throw new RepositoryException("Unable to detach object");
+        if ($this->plan->contains($domain)) {
+            $this->plan->detach($domain);
         }
-
-        $this->plan->detach($domain);
 
         return $this;
     }
